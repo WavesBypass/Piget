@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Piget - Stats</title>
+  <link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">Piget</div>
+    <div class="nav-links">
+      <a href="stats.html">Stats</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="market.html">Market</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </nav>
+
+  <div class="content">
+  <h1 class="page-heading">Stats</h1>
+  <div class="subheading">Hello, User!</div>
+
+  <div class="stats-container">
+    <div class="stat-box">Tokens<br><strong>Loading...</strong></div>
+    <div class="stat-box">Blooks Unlocked<br><strong>Loading...</strong></div>
+    <div class="stat-box">Packs Opened<br><strong>Loading...</strong></div>
+  </div>
+</div>
+  <script>
+    const savedTheme = localStorage.getItem("theme") || "default";
+    document.body.classList.add(`theme-${savedTheme}`);
+  </script>
+</body>
+</html>

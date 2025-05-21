@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventory - Piget</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body class="theme-default">
+<nav class="navbar">
+    <div class="logo">Piget</div>
+    <div class="nav-links">
+      <a href="stats.html">Stats</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="market.html">Market</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </nav>
+  </div>
+  <div class="content-wrapper">
+    <div class="content">
+      <h1 class="page-heading">Inventory</h1>
+      <p class="subheading">Hello, user</p>
+      <div class="inventory-section">
+        <h2>Bug Pack</h2>
+        <hr />
+        <div class="inventory-grid">
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+          <div class="inventory-box locked"><img src="lock.png" alt="Locked" /></div>
+        </div>
+      </div>
+
+      <div class="inventory-section">
+        <h2>Space Pack</h2>
+        <hr />
+        <div class="inventory-grid">
+          <div class="inventory-box"><span>Rocket</span><span>Qty: 1</span></div>
+          <div class="inventory-box"><span>Alien</span><span>Qty: 2</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+    const savedTheme = localStorage.getItem("theme") || "default";
+    document.body.classList.add(`theme-${savedTheme}`);
+  </script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market - Piget</title>
+  <link rel="stylesheet" href="main.css" />
+</head>
+<body class="theme-default">
+  <div class="navbar">
+    <div class="logo">Piget</div>
+    <div class="nav-links">
+      <a href="market.html">Market</a>
+      <a href="stats.html">Stats</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1 class="page-heading">Market</h1>
+    <p class="subheading">Click the button to open a pack!</p>
+
+    <div class="pack-opening-container">
+      <div class="pack" id="pack">
+        <div class="tear-effect" id="tearEffect"></div>
+        <img src="pack.png" alt="Pack" class="pack-image" />
+        <div class="card-reward" id="cardReward">⭐ Epic Card</div>
+        <div class="particles" id="particlesContainer"></div>
+      </div>
+      <button onclick="openPack()" class="open-pack-btn">Open Pack</button>
+    </div>
+  </div>
+
+  <script>
+    function openPack() {
+      const tear = document.getElementById("tearEffect");
+      const card = document.getElementById("cardReward");
+      const particles = document.getElementById("particlesContainer");
+
+      // Reset
+      tear.style.top = "-100%";
+      card.style.bottom = "-100%";
+      particles.innerHTML = "";
+
+      // Start tear animation
+      setTimeout(() => {
+        tear.style.top = "0";
+      }, 100);
+
+      // After tear, show card and particles
+      setTimeout(() => {
+        card.style.bottom = "40%";
+        generateParticles(particles);
+      }, 1100);
+    }
+
+    function generateParticles(container) {
+      for (let i = 0; i < 25; i++) {
+        const p = document.createElement("div");
+        p.className = "particle";
+        p.style.left = `${Math.random() * 100 - 50}px`;
+        p.style.top = `${Math.random() * 100 - 50}px`;
+        p.style.backgroundColor = getRandomColor();
+        container.appendChild(p);
+      }
+    }
+
+    function getRandomColor() {
+      const colors = ["#ffd700", "#ffcc00", "#ffffff", "#ff9933"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+  </script>
+</body>
+</html>

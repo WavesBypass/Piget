@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&family=Titan+One&display=swap');
+
+:root {
+  --bg-default: url('pigetback.png');
+  --bg-dark: url('darkpigetback.png');
+
+  --text-color: #ffffff;
+  --accent-color: #ffcc00;
+
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.2);
+
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+  --font-heading: 'Titan One', cursive;
+  --font-body: 'Nunito', sans-serif;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background-size: cover;
+  background-position: center;
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+body.theme-default {
+  background-image: var(--bg-default);
+}
+
+body.theme-dark {
+  background-image: var(--bg-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400 !important;
+  margin: 0;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  backdrop-filter: blur(12px);
+  background: var(--glass-bg);
+  border-bottom: 2px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  color: var(--text-color);
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  transition: background-color 0.3s ease;
+  font-family: var(--font-body);
+}
+
+.nav-links a:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Page Content */
+.content {
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+.page-heading {
+  font-family: var(--font-heading);
+  font-size: 36px;
+  margin-bottom: 10px;
+  color: var(--text-color);
+}
+
+.subheading {
+  font-size: 16px;
+  color: var(--text-color);
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+/* Pack Opening Section */
+.pack-opening-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.pack {
+  position: relative;
+  width: 220px;
+  height: 300px;
+  background-color: #333;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pack-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.tear-effect {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, #aaa, transparent);
+  z-index: 2;
+  transition: top 1s ease-in-out;
+}
+
+.card-reward {
+  position: absolute;
+  bottom: -100%;
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  font-weight: bold;
+  border-radius: 12px;
+  z-index: 3;
+  transition: bottom 1s ease-in-out;
+  text-align: center;
+  width: 80%;
+  box-shadow: var(--shadow);
+}
+
+.open-pack-btn {
+  margin-top: 10px;
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-size: 16px;
+  border: none;
+  border-radius: var(--radius);
+  background-color: var(--accent-color);
+  color: #000;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.open-pack-btn:hover {
+  background-color: #ffe066;
+}
+
+/* Particles */
+.particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background-color: gold;
+  border-radius: 50%;
+  animation: particleAnimation 0.8s forwards ease-out;
+}
+
+@keyframes particleAnimation {
+  from {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(
+      calc(-50px + 100px * var(--rand-x)),
+      calc(-50px + 100px * var(--rand-y))
+    );
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .pack {
+    width: 180px;
+    height: 250px;
+  }
+}

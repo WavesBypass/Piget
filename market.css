@@ -1,0 +1,167 @@
+/* market.css */
+
+/* General layout for Market page */
+.content {
+  text-align: center;
+  margin-top: 40px;
+  font-family: 'Nunito', sans-serif;
+  color: white;
+}
+
+/* Pack open button */
+.pack-button {
+  font-family: 'Titan One', cursive;
+  font-size: 26px;
+  background: #ffcc00;
+  border: none;
+  border-radius: 14px;
+  padding: 15px 40px;
+  cursor: pointer;
+  box-shadow: 0 0 12px #ffcc00;
+  transition: background-color 0.3s ease;
+}
+
+.pack-button:hover {
+  background-color: #ffdb4d;
+}
+
+/* Container for pack + animations */
+.pack-container {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 320px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Start hidden */
+.hidden {
+  display: none !important;
+}
+
+/* Pack styling */
+.pack {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  background: linear-gradient(135deg, #ffcc00 0%, #ffb400 100%);
+  border-radius: 24px;
+  box-shadow: 0 0 20px #ffcc00;
+  overflow: hidden;
+}
+
+/* The top part that will “tear” open */
+.pack-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(135deg, #ffd633, #ffb800);
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+  box-shadow: inset 0 4px 8px rgba(255,255,255,0.4);
+  z-index: 10;
+  transform-origin: bottom center;
+  transition: transform 1s ease;
+}
+
+/* The body of the pack */
+.pack-body {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  background: linear-gradient(135deg, #ffb400 0%, #e6a300 100%);
+  border-radius: 0 0 24px 24px;
+  box-shadow: inset 0 5px 12px rgba(0,0,0,0.3);
+}
+
+/* Pack slide in animation */
+.pack-container.slide-in {
+  animation: packSlideUp 0.5s forwards;
+}
+
+@keyframes packSlideUp {
+  from {
+    bottom: -350px;
+    opacity: 0;
+  }
+  to {
+    bottom: 30px;
+    opacity: 1;
+  }
+}
+
+/* Pack top tear open */
+.pack-top.tear-open {
+  transform: rotateX(-90deg);
+  transition-timing-function: ease-in;
+}
+
+/* Tear effect line */
+.pack-tear {
+  position: absolute;
+  top: 65px;
+  left: 10px;
+  width: 200px;
+  height: 8px;
+  background: repeating-linear-gradient(
+    45deg,
+    #fff0,
+    #fff0 4px,
+    #ffec4a 5px,
+    #ffcc00 7px
+  );
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 11;
+}
+
+/* Tear effect visible */
+.pack-tear.active {
+  opacity: 1;
+  animation: tearGlow 1s ease infinite alternate;
+}
+
+@keyframes tearGlow {
+  from {
+    filter: drop-shadow(0 0 6px #ffcc00);
+  }
+  to {
+    filter: drop-shadow(0 0 14px #ffd633);
+  }
+}
+
+/* Reward card sliding out */
+.reward-card {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  width: 160px;
+  height: 220px;
+  background: linear-gradient(135deg, #fff200 0%, #ffdc3d 100%);
+  border-radius: 20px;
+  box-shadow: 0 0 20px #ffd633;
+  font-family: 'Titan One', cursive;
+  font-size: 28px;
+  font-weight: 900;
+  color: #333;
+  text-align: center;
+  line-height: 220px;
+  transform: translateX(-50%) translateY(100%);
+  opacity: 0;
+  transition: all 1s ease;
+  z-index: 12;
+}
+
+/* Reward card visible & sliding up */
+.reward-card.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}

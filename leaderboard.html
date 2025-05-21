@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leaderboard | Piget</title>
+  <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <nav class="navbar">
+    <div class="logo">Piget</div>
+    <div class="nav-links">
+      <a href="stats.html">Stats</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="market.html">Market</a>
+      <a href="inventory.html">Inventory</a>
+      <a href="settings.html">Settings</a>
+    </div>
+  </nav>
+
+  <main class="content">
+    <h1 class="page-heading titan-font">Leaderboard</h1>
+    <div class="subheading">Top players ranked by score</div>
+
+    <div class="leaderboard-wrapper">
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>UserOne</td>
+            <td>10500</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>UserTwo</td>
+            <td>9700</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>UserThree</td>
+            <td>8900</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</body>
+ <script>
+    const savedTheme = localStorage.getItem("theme") || "default";
+    document.body.classList.add(`theme-${savedTheme}`);
+  </script>
+</html>
