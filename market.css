@@ -1,167 +1,107 @@
-/* market.css */
-
-/* General layout for Market page */
-.content {
-  text-align: center;
-  margin-top: 40px;
-  font-family: 'Nunito', sans-serif;
-  color: white;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('pigetback.png');
+  background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
 }
 
-/* Pack open button */
-.pack-button {
-  font-family: 'Titan One', cursive;
-  font-size: 26px;
-  background: #ffcc00;
-  border: none;
-  border-radius: 14px;
-  padding: 15px 40px;
-  cursor: pointer;
-  box-shadow: 0 0 12px #ffcc00;
-  transition: background-color 0.3s ease;
+.theme-dark {
+  background-image: url('darkpigetback.png');
 }
 
-.pack-button:hover {
-  background-color: #ffdb4d;
-}
-
-/* Container for pack + animations */
-.pack-container {
+.navbar {
   position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 320px;
-  pointer-events: none;
-  z-index: 9999;
+  top: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  z-index: 999;
+  backdrop-filter: blur(10px);
 }
 
-/* Start hidden */
-.hidden {
-  display: none !important;
+.navbar a {
+  color: white;
+  margin-left: 1rem;
+  text-decoration: none;
 }
 
-/* Pack styling */
-.pack {
-  position: relative;
-  width: 220px;
-  height: 320px;
-  background: linear-gradient(135deg, #ffcc00 0%, #ffb400 100%);
-  border-radius: 24px;
-  box-shadow: 0 0 20px #ffcc00;
-  overflow: hidden;
+main {
+  padding-top: 100px;
+  text-align: center;
 }
 
-/* The top part that will “tear” open */
-.pack-top {
-  position: absolute;
+.pack-buttons {
+  margin-top: 2rem;
+}
+
+button {
+  padding: 1rem 2rem;
+  margin: 1rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 70px;
-  background: linear-gradient(135deg, #ffd633, #ffb800);
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
-  box-shadow: inset 0 4px 8px rgba(255,255,255,0.4);
-  z-index: 10;
-  transform-origin: bottom center;
-  transition: transform 1s ease;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.85);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 1000;
 }
 
-/* The body of the pack */
-.pack-body {
-  position: absolute;
-  top: 70px;
-  left: 0;
-  width: 100%;
-  height: 250px;
-  background: linear-gradient(135deg, #ffb400 0%, #e6a300 100%);
-  border-radius: 0 0 24px 24px;
-  box-shadow: inset 0 5px 12px rgba(0,0,0,0.3);
-}
-
-/* Pack slide in animation */
-.pack-container.slide-in {
-  animation: packSlideUp 0.5s forwards;
-}
-
-@keyframes packSlideUp {
-  from {
-    bottom: -350px;
-    opacity: 0;
-  }
-  to {
-    bottom: 30px;
-    opacity: 1;
-  }
-}
-
-/* Pack top tear open */
-.pack-top.tear-open {
-  transform: rotateX(-90deg);
-  transition-timing-function: ease-in;
-}
-
-/* Tear effect line */
-.pack-tear {
-  position: absolute;
-  top: 65px;
-  left: 10px;
+.pack-image {
   width: 200px;
-  height: 8px;
-  background: repeating-linear-gradient(
-    45deg,
-    #fff0,
-    #fff0 4px,
-    #ffec4a 5px,
-    #ffcc00 7px
-  );
-  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.tear {
+  width: 100px;
+  height: 100px;
+  background: url('tear.png') no-repeat center;
+  background-size: contain;
+  display: none;
+  animation: tearAnim 0.5s forwards;
+  margin-top: -80px;
+}
+
+.reward-card {
+  width: 220px;
+  margin-top: 20px;
   opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 11;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transform: scale(0.5);
 }
 
-/* Tear effect visible */
-.pack-tear.active {
+.show-card {
   opacity: 1;
-  animation: tearGlow 1s ease infinite alternate;
+  transform: scale(1);
 }
 
-@keyframes tearGlow {
+@keyframes tearAnim {
   from {
-    filter: drop-shadow(0 0 6px #ffcc00);
+    transform: scaleY(0);
   }
   to {
-    filter: drop-shadow(0 0 14px #ffd633);
+    transform: scaleY(1);
   }
-}
-
-/* Reward card sliding out */
-.reward-card {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  width: 160px;
-  height: 220px;
-  background: linear-gradient(135deg, #fff200 0%, #ffdc3d 100%);
-  border-radius: 20px;
-  box-shadow: 0 0 20px #ffd633;
-  font-family: 'Titan One', cursive;
-  font-size: 28px;
-  font-weight: 900;
-  color: #333;
-  text-align: center;
-  line-height: 220px;
-  transform: translateX(-50%) translateY(100%);
-  opacity: 0;
-  transition: all 1s ease;
-  z-index: 12;
-}
-
-/* Reward card visible & sliding up */
-.reward-card.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
 }
