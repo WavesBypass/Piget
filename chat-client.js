@@ -1,53 +1,48 @@
-// Connect to WebSocket server (adjust port if needed)
-const wsProtocol = location.protocol === 'https:' ? 'wss' : 'ws';
-const wsPort = 8080; // change if your PHP WebSocket server runs on a different port
-const ws = new WebSocket(`${wsProtocol}://${location.hostname}:${wsPort}`);
+const socket = new WebSocket("ws://piget.org:8080");
 
-const chatLog = document.getElementById('chat-log');
-const chatForm = document.getElementById('chat-form');
-const chatInput = document.getElementById('chat-input');
+const messagesList = document.getElementById('messages');
+const input = document.getElementById('messageInput');
+const sendBtn = document.getElementById('sendBtn');
 
-ws.addEventListener('open', () => {
-  appendMessage('System', 'Connected to chat server.');
+socket.addEventListener('open', () => {
+  appendMessage('Connected to chat server.');
 });
 
-ws.addEventListener('message', (event) => {
-  // Display incoming messages
-  appendMessage('Friend', event.data.trim());
+socket.addEventListener('message', event => {
+  appendMessage(`Friend: ${event.data}`);
 });
 
-ws.addEventListener('close', () => {
-  appendMessage('System', 'Disconnected from chat server.');
+socket.addEventListener('close', () => {
+  appendMessage('Disconnected from chat server.');
 });
 
-ws.addEventListener('error', (err) => {
-  console.error('WebSocket error:', err);
-  appendMessage('System', 'WebSocket error occurred.');
+socket.addEventListener('error', error => {
+  console.error('WebSocket error:', error);
+  appendMessage('WebSocket error occurred.');
 });
 
-// Helper to add messages to chat log
-function appendMessage(sender, message) {
-  const messageElem = document.createElement('div');
-  messageElem.classList.add('message');
-  messageElem.innerHTML = `<strong>${sender}:</strong> ${sanitize(message)}`;
-  chatLog.appendChild(messageElem);
-  chatLog.scrollTop = chatLog.scrollHeight; // Scroll down
+sendBtn.addEventListener('click', () => {
+  sendMessage();
+});
+
+input.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    sendMessage();
+  }
+});
+
+function sendMessage() {
+  const message = input.value.trim();
+  if (message === '') return;
+  
+  socket.send(message);
+  appendMessage(`You: ${message}`);
+  input.value = '';
 }
 
-// Simple sanitizer to prevent HTML injection
-function sanitize(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
+function appendMessage(msg) {
+  const li = document.createElement('li');
+  li.textContent = msg;
+  messagesList.appendChild(li);
+  messagesList.scrollTop = messagesList.scrollHeight;
 }
-
-// Handle sending messages
-chatForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const msg = chatInput.value.trim();
-  if (msg === '') return;
-  ws.send(msg);
-  appendMessage('You', msg);
-  chatInput.value = '';
-  chatInput.focus();
-});
