@@ -1,59 +1,44 @@
-// chat-client.js
+const socket = new WebSocket("wss://piget.org:8080"); // Use your WS server URL & port
 
-// Connect to WebSocket server securely using wss://
-const socket = new WebSocket("wss://piget.org:8080");
+const form = document.getElementById("chatForm");
+const input = document.getElementById("messageInput");
+const messagesList = document.getElementById("messages");
 
-const messagesList = document.getElementById('messages');
-const input = document.getElementById('messageInput');
-const sendBtn = document.getElementById('sendBtn');
-
-// When connection opens
-socket.addEventListener('open', () => {
-  appendMessage('Connected to chat server.');
+socket.addEventListener("open", () => {
+  appendMessage("System: Connected to chat server.");
 });
 
-// When a message is received from server
-socket.addEventListener('message', event => {
+socket.addEventListener("message", (event) => {
   appendMessage(`Friend: ${event.data}`);
 });
 
-// When connection closes
-socket.addEventListener('close', () => {
-  appendMessage('Disconnected from chat server.');
+socket.addEventListener("close", () => {
+  appendMessage("System: Disconnected from chat server.");
 });
 
-// When error occurs
-socket.addEventListener('error', error => {
-  console.error('WebSocket error:', error);
-  appendMessage('WebSocket error occurred.');
+socket.addEventListener("error", (error) => {
+  appendMessage("System: Connection error.");
+  console.error("WebSocket error:", error);
 });
 
-// Send message on button click
-sendBtn.addEventListener('click', () => {
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // Prevent form submission page reload
   sendMessage();
 });
 
-// Send message on Enter key press
-input.addEventListener('keypress', (e) => {
-  if (e.key === 'Enter') {
-    sendMessage();
-  }
-});
-
-// Send message function
 function sendMessage() {
   const message = input.value.trim();
-  if (message === '') return;
+  if (!message) return;
 
   socket.send(message);
   appendMessage(`You: ${message}`);
-  input.value = '';
+  input.value = "";
+  input.focus();
 }
 
-// Append message to messages list and scroll down
-function appendMessage(msg) {
-  const li = document.createElement('li');
-  li.textContent = msg;
+function appendMessage(text) {
+  const li = document.createElement("li");
+  li.textContent = text;
   messagesList.appendChild(li);
   messagesList.scrollTop = messagesList.scrollHeight;
 }
