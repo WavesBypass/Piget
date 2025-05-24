@@ -19,7 +19,7 @@ function applyTheme(theme) {
 
   const bgImage =
     theme === "dark"
-      ? "url('css/img/darkpigetback.png')"
-      : "url('css/img/pigetback.png')";
+      ? "url('darkpigetback.png')"
+      : "url('pigetback.png')";
   document.body.style.backgroundImage = bgImage;
 }
