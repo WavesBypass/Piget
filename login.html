@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Piget</title>
-  <link rel="stylesheet" href="css/auth.css" />
+  <link rel="stylesheet" href="auth.css" />
 </head>
 <body>
   <nav class="auth-navbar">
@@ -39,7 +39,7 @@
       const formData = new FormData(form);
 
       try {
-        const response = await fetch('php/login.php', {
+        const response = await fetch('login.php', {
           method: 'POST',
           body: formData
         });
