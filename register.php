@@ -1,38 +1,32 @@
 <?php
 session_start();
-header('Content-Type: application/json');
-require_once 'db.php';
+require 'db.php'; // file to connect to MySQL - I'll provide below
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'message' => 'Invalid request method.']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // sanitize input
+    $username = trim($_POST['username']);
+    $password = $_POST['password'];
+
+    if (empty($username) || empty($password)) {
+        die('Please fill in all fields');
+    }
+
+    // check if username already exists
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
+    $stmt->execute([$username]);
+    if ($stmt->fetch()) {
+        die('Username already taken');
+    }
+
+    // hash password securely
+    $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+    // insert new user
+    $stmt = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+    $stmt->execute([$username, $passwordHash]);
+
+    // redirect to login page
+    header('Location: login.html');
     exit;
 }
-
-$username = trim($_POST['username'] ?? '');
-$password = $_POST['password'] ?? '';
-$confirm_password = $_POST['confirm_password'] ?? '';
-
-if (empty($username) || empty($password) || empty($confirm_password)) {
-    echo json_encode(['success' => false, 'message' => 'Please fill in all fields.']);
-    exit;
-}
-
-if ($password !== $confirm_password) {
-    echo json_encode(['success' => false, 'message' => 'Passwords do not match.']);
-    exit;
-}
-
-$stmt = $pdo->prepare("SELECT id FROM users WHERE username = ?");
-$stmt->execute([$username]);
-if ($stmt->fetch()) {
-    echo json_encode(['success' => false, 'message' => 'Username already taken.']);
-    exit;
-}
-
-$passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-$stmt = $pdo->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
-$stmt->execute([$username, $passwordHash]);
-
-$_SESSION['username'] = $username;
-echo json_encode(['success' => true]);
+?>
