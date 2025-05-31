@@ -1,60 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Register - Piget</title>
-  <link rel="stylesheet" href="auth.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Piget Register</title>
+<style>
+  body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+  .register-container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 8px; }
+  input[type=text], input[type=password] {
+    width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box;
+  }
+  button {
+    background-color: #2196F3; color: white; padding: 12px; border: none; width: 100%; cursor: pointer;
+  }
+  button:hover { background-color: #0b7dda; }
+  label { display: block; margin-top: 10px; }
+</style>
 </head>
 <body>
-  <nav class="auth-navbar">
-    <div class="nav-logo">Piget</div>
-    <div class="nav-links">
-      <a href="login.html">Login</a>
-      <a href="register.html">Register</a>
-    </div>
-  </nav>
 
-  <div class="login-container">
-    <h1 class="login-heading">Register</h1>
+<div class="register-container">
+  <h2>Register for Piget</h2>
+  <form method="POST" action="register.php">
+    <label for="username">Choose a Username</label>
+    <input type="text" id="username" name="username" required />
 
-    <div id="error-message" style="color: red; margin-bottom: 15px;"></div>
+    <label for="password">Choose a Password</label>
+    <input type="password" id="password" name="password" required />
 
-    <form id="register-form">
-      <input type="text" name="username" placeholder="Username" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <input type="password" name="confirm_password" placeholder="Confirm Password" required />
-      <button type="submit">Register</button>
-    </form>
-  </div>
+    <button type="submit">Register</button>
+  </form>
+  <p>Already have an account? <a href="login.html">Login here</a></p>
+</div>
 
-  <script>
-    const form = document.getElementById('register-form');
-    const errorDiv = document.getElementById('error-message');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      errorDiv.textContent = '';
-
-      const formData = new FormData(form);
-
-      try {
-        const response = await fetch('register.php', {
-          method: 'POST',
-          body: formData
-        });
-        const data = await response.json();
-
-        if (data.success) {
-          window.location.href = 'dashboard.html';
-        } else {
-          errorDiv.textContent = data.message || 'Registration failed.';
-        }
-      } catch (err) {
-        errorDiv.textContent = 'Error connecting to server.';
-      }
-    });
-  </script>
 </body>
 </html>
