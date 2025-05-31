@@ -1,36 +1,38 @@
 <?php
 session_start();
-require 'db.php'; // your DB connection file
+include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username']);
     $password = $_POST['password'];
-    $remember = isset($_POST['remember_me']);
 
-    if (empty($username) || empty($password)) {
-        die('Please fill in all fields');
-    }
+    $stmt = $conn->prepare("SELECT id, password FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $stmt->store_result();
 
-    // fetch user from DB
-    $stmt = $pdo->prepare("SELECT id, password FROM users WHERE username = ?");
-    $stmt->execute([$username]);
-    $user = $stmt->fetch();
+    if ($stmt->num_rows === 1) {
+        $stmt->bind_result($user_id, $hashed_password);
+        $stmt->fetch();
 
-    if ($user && password_verify($password, $user['password'])) {
-        // valid login
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $username;
+        if (password_verify($password, $hashed_password)) {
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['username'] = $username;
 
-        if ($remember) {
-            // create a cookie valid for 30 days
-            setcookie('piget_remember', session_id(), time() + (86400 * 30), "/"); 
+            if (isset($_POST['remember'])) {
+                setcookie("remember", $username, time() + (86400 * 30), "/");
+            }
+
+            header("Location: stats.html");
+            exit();
+        } else {
+            echo "❌ Incorrect password.";
         }
-
-        // redirect to game main page (e.g., index.html)
-        header('Location: index.html');
-        exit;
     } else {
-        die('Invalid username or password');
+        echo "❌ User not found.";
     }
+
+    $stmt->close();
+    $conn->close();
 }
 ?>
