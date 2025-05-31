@@ -1,21 +1,14 @@
 <?php
-$host = 'localhost';  // or your DB host (DigitalOcean managed DB host)
-$db   = 'piget_db';   // your database name
-$user = 'piget_user'; // your database user
-$pass = 'your_password'; // your DB password
-$charset = 'utf8mb4';
+$host = 'dbaas-db-2345187-do-user-22678364-0.e.db.ondigitalocean.com';
+$port = 25060;
+$db   = 'defaultdb';
+$user = 'doadmin';
+$pass = 'AVNS_skBZ06QKHsv48PN5TRz';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+// Enable SSL connection
+$conn = new mysqli($host, $user, $pass, $db, $port, '/etc/ssl/certs/ca-certificates.crt');
 
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (Exception $e) {
-    error_log($e->getMessage());
-    exit('Database connection failed'); // hide error from users
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 ?>
